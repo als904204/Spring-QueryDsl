@@ -164,5 +164,24 @@ class QuerydslBasicTestTest {
         assertThat(teamB.get(member.age.avg())).isEqualTo(20);
     }
 
+    @DisplayName("join")
+    @Test
+    public void join() {
+        /**
+         * SELECT member
+         * from member
+         * join member.teamId = team.teamId
+         * where team.name = "teamA";
+         */
+        List<Member> result = queryFactory
+            .selectFrom(member)
+            .join(member.team, team)
+            .where(team.name.eq("teamA"))
+            .fetch();
+
+        assertThat(result)
+            .extracting("username") // username 컬럼만 추출
+            .containsExactly("member1", "member2"); // 컬럼이 순서대로 member1,member2 와 일치하는지 검증
+    }
 
 }
