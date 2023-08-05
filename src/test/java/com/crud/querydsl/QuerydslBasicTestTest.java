@@ -1,10 +1,12 @@
 package com.crud.querydsl;
 
+import static com.crud.querydsl.domain.team.entity.QTeam.team;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.crud.querydsl.domain.member.entity.Member;
 
 import com.crud.querydsl.domain.team.entity.Team;
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import java.util.List;
@@ -140,6 +142,26 @@ class QuerydslBasicTestTest {
 
         assertThat(totalSize).isEqualTo(4);
 
+    }
+
+    @DisplayName("groupBy")
+    @Test
+    public void groupBy() {
+        List<Tuple> result = queryFactory
+            .select(team.name, member.age.avg())
+            .from(member)
+            .join(member.team, team)
+            .groupBy(team)
+            .fetch();
+
+        Tuple teamA = result.get(0);
+        Tuple teamB = result.get(1);
+
+        assertThat(teamA.get(team.name)).isEqualTo("teamA");
+        assertThat(teamA.get(member.age.avg())).isEqualTo(15);
+
+        assertThat(teamB.get(team.name)).isEqualTo("teamB");
+        assertThat(teamB.get(member.age.avg())).isEqualTo(20);
     }
 
 
