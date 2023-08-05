@@ -49,9 +49,7 @@ class QuerydslBasicTestTest {
     }
 
     /**
-     * 1. JPQL 을 사용하여 member1 조회
-     * 직접 String 형식으로 SQL 문을 작성해야하는 단점
-     * 런타임 시에 오류 발생 X
+     * 1. JPQL 을 사용하여 member1 조회 직접 String 형식으로 SQL 문을 작성해야하는 단점 런타임 시에 오류 발생 X
      */
     @Test
     public void startJPQL() {
@@ -79,7 +77,6 @@ class QuerydslBasicTestTest {
 
         assertThat(username.getUsername()).isEqualTo("member1");
 
-
         // username : member1, age : 10
         // but using and op
         Member usernameAndAge1 = queryFactory
@@ -104,14 +101,15 @@ class QuerydslBasicTestTest {
     @DisplayName("정렬")
     @Test
     public void sort() {
-        em.persist(new Member(null,100));
-        em.persist(new Member("member5",100));
-        em.persist(new Member("member6",100));
+        em.persist(new Member(null, 100));
+        em.persist(new Member("member5", 100));
+        em.persist(new Member("member6", 100));
 
         List<Member> resultList = queryFactory
             .selectFrom(member)
             .where(member.age.eq(100))
-            .orderBy(member.age.desc(), member.username.asc().nullsLast()) // age 순으로 내림차순, 같다면 이름순으로 오름차순
+            .orderBy(member.age.desc(),
+                member.username.asc().nullsLast()) // age 순으로 내림차순, 같다면 이름순으로 오름차순
             .fetch();
 
         Member member5 = resultList.get(0);
@@ -184,4 +182,27 @@ class QuerydslBasicTestTest {
             .containsExactly("member1", "member2"); // 컬럼이 순서대로 member1,member2 와 일치하는지 검증
     }
 
+    @DisplayName("left join")
+    @Test
+    public void leftJoin() {
+        /**
+         * 회원은 모두 조회하면서
+         * 회원이 소속된 팀 이름이 teamA인 회원만 팀까지 표시
+         * SELECT m.*, t.*
+         * FROM MEMBER m
+         * LEFT JOIN TEAM t
+         * ON m.TEAM_ID = t.id and t.name="teamA"
+         */
+
+        List<Tuple> fetch = queryFactory
+            .select(member, team)
+            .from(member)
+            .leftJoin(member.team, team).on(team.name.eq("teamA"))
+            .fetch();
+
+        for (Tuple t : fetch) {
+            System.out.println("t = " + t);
+        }
+
+    }
 }

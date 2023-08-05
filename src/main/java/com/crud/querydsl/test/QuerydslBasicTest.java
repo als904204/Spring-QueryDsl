@@ -1,4 +1,4 @@
-package com.crud.querydsl;
+package com.crud.querydsl.test;
 
 public class QuerydslBasicTest {
 
