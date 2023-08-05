@@ -1,9 +1,9 @@
 package com.crud.querydsl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.crud.querydsl.domain.member.entity.Member;
+
 import com.crud.querydsl.domain.team.entity.Team;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import static com.crud.querydsl.domain.member.entity.QMember.*;
 
 @SpringBootTest
 @Transactional
@@ -40,6 +41,7 @@ class QuerydslBasicTestTest {
         em.persist(member2);
         em.persist(member3);
         em.persist(member4);
+
     }
 
     /**
@@ -59,5 +61,16 @@ class QuerydslBasicTestTest {
 
         assertThat(findByJPQL.getUsername()).isEqualTo("member1");
 
+    }
+
+    @Test
+    public void startQuerydsl() {
+        Member findMember = queryFactory
+            .select(member)
+            .from(member)
+            .where(member.username.eq("member1"))
+            .fetchOne();
+
+        assertThat(findMember.getUsername()).isEqualTo("member1");
     }
 }
