@@ -65,12 +65,37 @@ class QuerydslBasicTestTest {
 
     @Test
     public void startQuerydsl() {
-        Member findMember = queryFactory
+
+        // username : member1
+        Member username = queryFactory
             .select(member)
             .from(member)
             .where(member.username.eq("member1"))
             .fetchOne();
 
-        assertThat(findMember.getUsername()).isEqualTo("member1");
+        assertThat(username.getUsername()).isEqualTo("member1");
+
+
+        // username : member1, age : 10
+        // but using and op
+        Member usernameAndAge1 = queryFactory
+            .select(member)
+            .from(member)
+            .where(member.username.eq("member1").and(member.age.eq(10)))
+            .fetchOne();
+
+        assertThat(usernameAndAge1.getAge()).isEqualTo(10);
+
+        // age : 10
+        // but using , op
+        Member usernameAndAge2 = queryFactory
+            .select(member)
+            .from(member)
+            .where(member.username.eq("member1"), (member.age.eq(10)))
+            .fetchOne();
+
+        assertThat(usernameAndAge2.getAge()).isEqualTo(10);
     }
+
+
 }
