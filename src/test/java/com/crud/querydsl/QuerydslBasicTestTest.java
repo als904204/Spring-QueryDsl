@@ -1,5 +1,6 @@
 package com.crud.querydsl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.crud.querydsl.domain.member.entity.Member;
@@ -41,14 +42,22 @@ class QuerydslBasicTestTest {
         em.persist(member4);
     }
 
+    /**
+     * 1. JPQL 을 사용하여 member1 조회
+     * 직접 String 형식으로 SQL 문을 작성해야하는 단점
+     * 런타임 시에 오류 발생 X
+     */
     @Test
     public void startJPQL() {
-        em.createQuery(
+        Member findByJPQL = em.createQuery(
                 "select m "
                     + "from Member m"
-                    + " where m.username = :username")
+                    + " where m.username = :username",
+                Member.class)
             .setParameter("username", "member1")
             .getSingleResult();
+
+        assertThat(findByJPQL.getUsername()).isEqualTo("member1");
 
     }
 }
