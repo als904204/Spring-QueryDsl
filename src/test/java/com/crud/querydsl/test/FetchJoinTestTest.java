@@ -2,6 +2,7 @@ package com.crud.querydsl.test;
 
 import static com.crud.querydsl.domain.member.entity.QMember.member;
 import static org.assertj.core.api.Assertions.assertThat;
+import static com.crud.querydsl.domain.team.entity.QTeam.team;
 
 import com.crud.querydsl.domain.member.entity.Member;
 import com.crud.querydsl.domain.team.entity.Team;
@@ -48,7 +49,7 @@ class FetchJoinTestTest {
     EntityManagerFactory emf;
     @DisplayName("Lazy 전략으로 인해 getTeam() 하지않는 이상 Team 을 조회하지 않는다")
     @Test
-    public void fetchNoJoin() {
+    public void fetchJoinNo() {
         em.flush();
         em.clear();
 
@@ -58,7 +59,24 @@ class FetchJoinTestTest {
             .fetchOne();
 
         boolean loaded = emf.getPersistenceUnitUtil().isLoaded(member1.getTeam());
-        assertThat(loaded).as("LAZY 전략").isFalse();
+        assertThat(loaded).as("Fetch 조인 미적용").isFalse();
+
+    }
+
+    @DisplayName("Lazy 조인 적용 후 Team 호출")
+    @Test
+    public void fetchJoinYES() {
+        em.flush();
+        em.clear();
+
+        Member member1 = queryFactory
+            .selectFrom(member)
+            .join(member.team, team).fetchJoin()
+            .where(member.username.eq("member1"))
+            .fetchOne();
+
+        boolean loaded = emf.getPersistenceUnitUtil().isLoaded(member1.getTeam());
+        assertThat(loaded).as("Fetch 조인 적용").isTrue();
 
     }
 
