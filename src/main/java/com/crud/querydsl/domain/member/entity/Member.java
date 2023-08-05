@@ -39,6 +39,10 @@ public class Member {
     public Member(String username) {
         this.username = username;
     }
+
+    public Member(String username,int age) {
+        this(username, age, null);
+    }
     public Member(String username, int age, Team team) {
         this.username = username;
         this.age = age;
@@ -46,6 +50,8 @@ public class Member {
             changeTeam(team);
         }
     }
+
+
 
     public void changeTeam(Team team) {
         this.team = team;

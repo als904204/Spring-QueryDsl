@@ -7,7 +7,9 @@ import com.crud.querydsl.domain.member.entity.Member;
 import com.crud.querydsl.domain.team.entity.Team;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -95,6 +97,28 @@ class QuerydslBasicTestTest {
             .fetchOne();
 
         assertThat(usernameAndAge2.getAge()).isEqualTo(10);
+    }
+
+    @DisplayName("정렬")
+    @Test
+    public void sort() {
+        em.persist(new Member(null,100));
+        em.persist(new Member("member5",100));
+        em.persist(new Member("member6",100));
+
+        List<Member> resultList = queryFactory
+            .selectFrom(member)
+            .where(member.age.eq(100))
+            .orderBy(member.age.desc(), member.username.asc().nullsLast()) // age 순으로 내림차순, 같다면 이름순으로 오름차순
+            .fetch();
+
+        Member member5 = resultList.get(0);
+        Member member6 = resultList.get(1);
+        Member memberNull = resultList.get(2);
+
+        assertThat(member5.getAge()).isEqualTo(100);
+        assertThat(member6.getAge()).isEqualTo(100);
+        assertThat(memberNull.getAge()).isEqualTo(100);
     }
 
 
