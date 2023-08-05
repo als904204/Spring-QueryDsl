@@ -121,5 +121,26 @@ class QuerydslBasicTestTest {
         assertThat(memberNull.getAge()).isEqualTo(100);
     }
 
+    @DisplayName("페이징 처리쿼리")
+    @Test
+    public void paging() {
+        List<Member> result = queryFactory
+            .selectFrom(member)
+            .orderBy(member.username.desc())
+            .offset(1) // 시작 index
+            .limit(2)  // 결과물 수 제한
+            .fetch();
+
+        assertThat(result.size()).isEqualTo(2);
+
+        int totalSize = queryFactory
+            .selectFrom(member)
+            .fetch()
+            .size();
+
+        assertThat(totalSize).isEqualTo(4);
+
+    }
+
 
 }
