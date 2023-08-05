@@ -1,9 +1,14 @@
 package com.crud.querydsl.domain.member.entity;
 
+import com.crud.querydsl.domain.team.entity.Team;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,13 +31,24 @@ public class Member {
 
     private int age;
 
-    private String team;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
+
     public Member(String username) {
         this.username = username;
     }
-    public Member(String username, int age, String team) {
+    public Member(String username, int age, Team team) {
         this.username = username;
         this.age = age;
+        if (team != null) {
+            changeTeam(team);
+        }
+    }
+
+    public void changeTeam(Team team) {
         this.team = team;
+        team.getMembers().add(this);
     }
 }
