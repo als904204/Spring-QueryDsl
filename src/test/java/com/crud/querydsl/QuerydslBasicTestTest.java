@@ -3,10 +3,14 @@ package com.crud.querydsl;
 import static com.crud.querydsl.domain.team.entity.QTeam.team;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.crud.querydsl.domain.member.dto.MemberDto;
+import com.crud.querydsl.domain.member.dto.QMemberDto;
 import com.crud.querydsl.domain.member.entity.Member;
 
+import com.crud.querydsl.domain.member.entity.QMember;
 import com.crud.querydsl.domain.team.entity.Team;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import java.util.List;
@@ -232,6 +236,49 @@ class QuerydslBasicTestTest {
             Integer age = t.get(member.age);
             System.out.println("username = " + username);
             System.out.println("age = " + age);
+        }
+    }
+
+    @DisplayName("Projection Setter 를 이용해 Dto 로 받기")
+    @Test
+    public void projectionGetDtoSetter() {
+        List<MemberDto> result = queryFactory
+            .select(Projections.bean(MemberDto.class,
+                member.username,
+                member.age))
+            .from(member)
+            .fetch();
+
+        for (MemberDto m: result) {
+            System.out.println("dto = "+m);
+        }
+    }
+
+    @DisplayName("Projection Fields 를 이용해 Dto 로 받기")
+    @Test
+    public void projectionGetDtoFields() {
+        List<MemberDto> result = queryFactory
+            .select(Projections.fields(MemberDto.class,
+                member.username,
+                member.age))
+            .from(member)
+            .fetch();
+
+        for (MemberDto m: result) {
+            System.out.println("dto = "+m);
+        }
+    }
+
+    @DisplayName("QueryProjection 을 이용해 Dto 로 받기")
+    @Test
+    public void projectionGetDtoQueryProjection() {
+        List<MemberDto> result = queryFactory
+            .select(new QMemberDto(member.username, member.age))
+            .from(member)
+            .fetch();
+
+        for (MemberDto dto : result) {
+            System.out.println(dto);
         }
     }
 }
