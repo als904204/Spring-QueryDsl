@@ -7,8 +7,8 @@ import com.crud.querydsl.domain.member.dto.MemberDto;
 import com.crud.querydsl.domain.member.dto.QMemberDto;
 import com.crud.querydsl.domain.member.entity.Member;
 
-import com.crud.querydsl.domain.member.entity.QMember;
 import com.crud.querydsl.domain.team.entity.Team;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -30,6 +30,7 @@ class QuerydslBasicTestTest {
     @Autowired
     EntityManager em;
     JPAQueryFactory queryFactory;
+
 
     @BeforeEach
     public void before() {
@@ -281,4 +282,5 @@ class QuerydslBasicTestTest {
             System.out.println(dto);
         }
     }
+
 }
