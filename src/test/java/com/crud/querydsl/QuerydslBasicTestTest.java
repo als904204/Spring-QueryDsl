@@ -206,5 +206,32 @@ class QuerydslBasicTestTest {
 
     }
 
+    @DisplayName("Projection 타입이 한개")
+    @Test
+    public void projectionOnlyOneType() {
+        List<String> result = queryFactory
+            .select(member.username)
+            .from(member)
+            .fetch();
 
+        for (String s : result) {
+            System.out.println("s = " + s);
+        }
+    }
+
+    @DisplayName("Projection 타입이 여러개")
+    @Test
+    public void projectionMultipleType() {
+        List<Tuple> result = queryFactory
+            .select(member.username, member.age)
+            .from(member)
+            .fetch();
+
+        for (Tuple t : result) {
+            String username = t.get(member.username);
+            Integer age = t.get(member.age);
+            System.out.println("username = " + username);
+            System.out.println("age = " + age);
+        }
+    }
 }
