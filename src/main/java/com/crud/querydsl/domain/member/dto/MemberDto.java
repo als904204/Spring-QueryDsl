@@ -1,10 +1,12 @@
 package com.crud.querydsl.domain.member.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 
 @ToString
 @Getter
@@ -21,4 +23,5 @@ public class MemberDto {
         this.username = username;
         this.age = age;
     }
+
 }
