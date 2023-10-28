@@ -1,12 +1,12 @@
-package com.crud.querydsl.domain.member;
+package com.crud.querydsl.member;
 
 import static com.crud.querydsl.domain.member.entity.QMember.member;
 import static com.crud.querydsl.domain.team.entity.QTeam.team;
 
-import com.crud.querydsl.domain.member.dto.MemberSearchCondition;
-import com.crud.querydsl.domain.member.dto.MemberTeamDto;
+import com.crud.querydsl.member.dto.MemberSearchCondition;
+import com.crud.querydsl.member.dto.MemberTeamDto;
 import com.crud.querydsl.domain.member.dto.QMemberTeamDto;
-import com.crud.querydsl.domain.member.entity.Member;
+import com.crud.querydsl.member.entity.Member;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

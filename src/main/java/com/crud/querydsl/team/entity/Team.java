@@ -1,6 +1,6 @@
-package com.crud.querydsl.domain.team.entity;
+package com.crud.querydsl.team.entity;
 
-import com.crud.querydsl.domain.member.entity.Member;
+import com.crud.querydsl.member.entity.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

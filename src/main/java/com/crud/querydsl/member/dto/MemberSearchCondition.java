@@ -1,4 +1,4 @@
-package com.crud.querydsl.domain.member.dto;
+package com.crud.querydsl.member.dto;
 
 import lombok.Data;
 

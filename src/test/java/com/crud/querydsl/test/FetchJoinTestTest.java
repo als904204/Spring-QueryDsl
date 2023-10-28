@@ -4,8 +4,8 @@ import static com.crud.querydsl.domain.member.entity.QMember.member;
 import static org.assertj.core.api.Assertions.assertThat;
 import static com.crud.querydsl.domain.team.entity.QTeam.team;
 
-import com.crud.querydsl.domain.member.entity.Member;
-import com.crud.querydsl.domain.team.entity.Team;
+import com.crud.querydsl.member.entity.Member;
+import com.crud.querydsl.team.entity.Team;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

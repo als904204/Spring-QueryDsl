@@ -181,11 +181,11 @@ package com.crud.querydsl;
 import static com.crud.querydsl.domain.team.entity.QTeam.team;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.crud.querydsl.domain.member.dto.MemberDto;
+import com.crud.querydsl.dto.member.MemberDto;
 import com.crud.querydsl.domain.member.dto.QMemberDto;
-import com.crud.querydsl.domain.member.entity.Member;
+import com.crud.querydsl.entity.member.Member;
 
-import com.crud.querydsl.domain.team.entity.Team;
+import com.crud.querydsl.entity.team.Team;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;

@@ -1,26 +1,20 @@
 package com.crud.querydsl.domain.member;
 
-import static com.crud.querydsl.domain.member.entity.QMember.member;
-import static com.crud.querydsl.domain.team.entity.QTeam.team;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.crud.querydsl.domain.member.dto.MemberSearchCondition;
-import com.crud.querydsl.domain.member.dto.MemberTeamDto;
-import com.crud.querydsl.domain.member.dto.QMemberTeamDto;
-import com.crud.querydsl.domain.member.entity.Member;
-import com.crud.querydsl.domain.team.entity.Team;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.crud.querydsl.member.MemberJpaRepository;
+import com.crud.querydsl.member.dto.MemberSearchCondition;
+import com.crud.querydsl.member.dto.MemberTeamDto;
+import com.crud.querydsl.member.entity.Member;
+import com.crud.querydsl.team.entity.Team;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 @SpringBootTest
 @Transactional

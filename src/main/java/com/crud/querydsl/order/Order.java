@@ -1,6 +1,6 @@
 package com.crud.querydsl.order;
 
-import com.crud.querydsl.domain.member.entity.Member;
+import com.crud.querydsl.member.entity.Member;
 import com.crud.querydsl.product.Product;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
